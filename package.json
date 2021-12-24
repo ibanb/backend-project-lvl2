@@ -1,0 +1,33 @@
+{
+  "name": "@hexlet/code",
+  "description": "[![Actions Status](https://github.com/ibanb/backend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/ibanb/backend-project-lvl2/actions)",
+  "version": "1.0.1",
+  "main": "logics.js",
+  "type": "module",
+  "bin": {
+    "code": "bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibanb/backend-project-lvl2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ibanb/backend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/ibanb/backend-project-lvl2#readme",
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "jest": "^27.4.5"
+  },
+  "dependencies": {
+    "commander": "^8.3.0"
+  }
+}
