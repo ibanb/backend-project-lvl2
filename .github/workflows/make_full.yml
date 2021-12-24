@@ -17,6 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: install deps
       run: make install
+    - name: check test
+      run: make test
+    - name: check lint
+      run: make lint
+
       
