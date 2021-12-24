@@ -20,14 +20,12 @@
     "url": "https://github.com/ibanb/backend-project-lvl2/issues"
   },
   "homepage": "https://github.com/ibanb/backend-project-lvl2#readme",
-  "devDependencies": {
+  "dependencies": {
+    "commander": "^8.3.0",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.3.0",
     "jest": "^27.4.5"
-  },
-  "dependencies": {
-    "commander": "^8.3.0"
   }
 }
