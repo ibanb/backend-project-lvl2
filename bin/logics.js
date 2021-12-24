@@ -5,7 +5,7 @@ import path from 'path';
 const compare = (filePath1, filePath2) => {
   const firstFile = fs.readFileSync(path.resolve(cwd(), filePath1), 'utf8');
   const secondFile = fs.readFileSync(path.resolve(cwd(), filePath2), 'utf8');
-  console.log(bruteValues(JSON.parse(firstFile), JSON.parse(secondFile)));  
+  return bruteValues(JSON.parse(firstFile), JSON.parse(secondFile));  
 };
 
 const bruteValues = (objOne, objTwo) => {
