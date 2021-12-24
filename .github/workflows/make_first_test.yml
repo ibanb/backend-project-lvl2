@@ -16,4 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: make install
+
+    - name: Install dependencies
+      run: make install
+      
+    - name: Run lint
+      run: make lint
+
