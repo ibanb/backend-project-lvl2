@@ -1,5 +1,5 @@
 import compare from '../bin/logics.js';
-import { result } from '../__fixtures__/result.js';
+import result from '../__fixtures__/result.js';
 
 test('reverse', () => {
   const testObj = result;

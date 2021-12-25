@@ -2,18 +2,12 @@ import fs from 'fs';
 import { cwd } from 'process';
 import path from 'path';
 
-const compare = (filePath1, filePath2) => {
-  const firstFile = fs.readFileSync(path.resolve(cwd(), filePath1), 'utf8');
-  const secondFile = fs.readFileSync(path.resolve(cwd(), filePath2), 'utf8');
-  return bruteValues(JSON.parse(firstFile), JSON.parse(secondFile));  
-};
-
 const bruteValues = (objOne, objTwo) => {
-  const keysObj_1 = Object.keys(objOne);
-  const keysObj_2 = Object.keys(objTwo);
+  const keysObj1 = Object.keys(objOne);
+  const keysObj2 = Object.keys(objTwo);
   const result = {};
-
-  for (let key of keysObj_1) {
+  /* eslint-disable-next-line */
+  for (const key of keysObj1) {
     if (objTwo[key] && objOne[key] === objTwo[key]) {
       result[`  ${key}`] = objOne[key];
     }
@@ -25,8 +19,8 @@ const bruteValues = (objOne, objTwo) => {
       result[`- ${key}`] = objOne[key];
     }
   }
-
-  for (let key of keysObj_2) {
+  /* eslint-disable-next-line */
+  for (const key of keysObj2) {
     if (!objOne[key]) {
       result[`+ ${key}`] = objTwo[key];
     }
@@ -45,12 +39,19 @@ const bruteValues = (objOne, objTwo) => {
       }
       return 0;
     });
-    for (let key of finalResult) {
+    /* eslint-disable-next-line */
+    for (const key of finalResult) {
       resultFin[key] = result[key];
     }
     return resultFin;
   };
   return sorted(unorderedKeys);
+};
+
+const compare = (filePath1, filePath2) => {
+  const firstFile = fs.readFileSync(path.resolve(cwd(), filePath1), 'utf8');
+  const secondFile = fs.readFileSync(path.resolve(cwd(), filePath2), 'utf8');
+  return bruteValues(JSON.parse(firstFile), JSON.parse(secondFile));
 };
 
 export default compare;
