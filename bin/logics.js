@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { cwd } from 'process';
 import path from 'path';
+import parse from './parser.js';
 
 const bruteValues = (objOne, objTwo) => {
   const keysObj1 = Object.keys(objOne);
@@ -49,9 +50,16 @@ const bruteValues = (objOne, objTwo) => {
 };
 
 const compare = (filePath1, filePath2) => {
-  const firstFile = fs.readFileSync(path.resolve(cwd(), filePath1), 'utf8');
-  const secondFile = fs.readFileSync(path.resolve(cwd(), filePath2), 'utf8');
-  return bruteValues(JSON.parse(firstFile), JSON.parse(secondFile));
+  const fullPathOne = path.resolve(cwd(), filePath1);
+  const fullPathSecond = path.resolve(cwd(), filePath2)
+  const firstFile = fs.readFileSync(fullPathOne, 'utf8');
+  const secondFile = fs.readFileSync(fullPathSecond, 'utf8');
+  const parseOne = parse(firstFile, path.extname(fullPathOne));
+  const parseTwo = parse(secondFile, path.extname(fullPathSecond));
+
+  console.log(bruteValues(parseOne, parseTwo));
 };
 
 export default compare;
+
+// const format = path.extname(pathTest);
