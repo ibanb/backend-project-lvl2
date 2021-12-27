@@ -51,7 +51,7 @@ const bruteValues = (objOne, objTwo) => {
 
 const compare = (filePath1, filePath2) => {
   const fullPathOne = path.resolve(cwd(), filePath1);
-  const fullPathSecond = path.resolve(cwd(), filePath2)
+  const fullPathSecond = path.resolve(cwd(), filePath2);
   const firstFile = fs.readFileSync(fullPathOne, 'utf8');
   const secondFile = fs.readFileSync(fullPathSecond, 'utf8');
   const parseOne = parse(firstFile, path.extname(fullPathOne));
@@ -61,5 +61,3 @@ const compare = (filePath1, filePath2) => {
 };
 
 export default compare;
-
-// const format = path.extname(pathTest);
