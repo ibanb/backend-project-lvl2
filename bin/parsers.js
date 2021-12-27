@@ -1,13 +1,11 @@
-import fs from 'fs';
-import { cwd } from 'process';
-import path from 'path';
+import yaml from 'js-yaml';
 
 const parse = (file, format) => {
   if (format === '.json') {
     return JSON.parse(file);
   }
   if (format === '.yml' || format === '.yaml') {
-    return "test!";
+    return yaml.load(file, 'utf-8');
   }
 };
 

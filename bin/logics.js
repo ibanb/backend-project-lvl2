@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { cwd } from 'process';
 import path from 'path';
-import parse from './parser.js';
+import parse from './parsers.js';
 
 const bruteValues = (objOne, objTwo) => {
   const keysObj1 = Object.keys(objOne);
@@ -57,7 +57,7 @@ const compare = (filePath1, filePath2) => {
   const parseOne = parse(firstFile, path.extname(fullPathOne));
   const parseTwo = parse(secondFile, path.extname(fullPathSecond));
 
-  console.log(bruteValues(parseOne, parseTwo));
+  return bruteValues(parseOne, parseTwo);
 };
 
 export default compare;
