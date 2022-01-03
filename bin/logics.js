@@ -7,6 +7,18 @@ const bruteValues = (objOne, objTwo) => {
   const keysObj1 = Object.keys(objOne);
   const keysObj2 = Object.keys(objTwo);
   const result = {};
+
+  /*
+    Ниже, в цикле в переборе, проверка, если VALUE это объект то запускаем рекурсию и передаем туда текущие объекты
+    ВСЁ СВОДИТЬ К ТОМУ ЧТОБЫ ОБЕРНУТЬ ВСЁ внутри цикла В ЕЩЁ ОДИН (iF) )))))))))))))) 
+
+    А во второй на отсутствие свойства всё сводиться к тому чтобы если отсутствующее свойсто имеет в значении тоже 
+    объект то тупо пройти его рекурсивно и отсортировать))))
+    
+    Иван, у тебя получиться.
+  */
+
+
   /* eslint-disable-next-line */
   for (const key of keysObj1) {
     if (objTwo[key] && objOne[key] === objTwo[key]) {
@@ -61,3 +73,5 @@ const compare = (filePath1, filePath2) => {
 };
 
 export default compare;
+
+// test
