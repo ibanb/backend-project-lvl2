@@ -73,5 +73,3 @@ const compare = (filePath1, filePath2) => {
 };
 
 export default compare;
-
-// test
