@@ -2,40 +2,61 @@ import fs from 'fs';
 import { cwd } from 'process';
 import path from 'path';
 import parse from './parsers.js';
+import _ from 'lodash';
 
-const bruteValues = (objOne, objTwo) => {
-  const keysObj1 = Object.keys(objOne);
-  const keysObj2 = Object.keys(objTwo);
+function bruteValues(valueOne, valueTwo) {
   const result = {};
 
-  /*
-    Ниже, в цикле в переборе, проверка, если VALUE это объект то запускаем рекурсию и передаем туда текущие объекты
-    ВСЁ СВОДИТЬ К ТОМУ ЧТОБЫ ОБЕРНУТЬ ВСЁ внутри цикла В ЕЩЁ ОДИН (iF) )))))))))))))) 
+  const keysOne = Object.keys(valueOne);
+  const keysTwo = Object.keys(valueTwo);
+  const uniq = _.uniq(keysOne.concat(keysTwo));
 
-    А во второй на отсутствие свойства всё сводиться к тому чтобы если отсутствующее свойсто имеет в значении тоже 
-    объект то тупо пройти его рекурсивно и отсортировать))))
+  for (const key of uniq) {
+
+    if (valueOne[key] && valueTwo[key] && valueOne[key] === valueTwo[key]) {
+      result[`  ${key}`] = valueOne[key]; 
+    }
     
-    Иван, у тебя получиться.
-  */
+    if (valueOne[key] && valueTwo[key] 
+      && typeof(valueOne[key]) !== 'object' && typeof(valueTwo[key]) !== 'object' 
+      && valueOne[key] !== valueTwo[key]) {
 
+      result[`- ${key}`] = valueOne[key];
+      result[`+ ${key}`] = valueTwo[key]; 
+    }
 
-  /* eslint-disable-next-line */
-  for (const key of keysObj1) {
-    if (objTwo[key] && objOne[key] === objTwo[key]) {
-      result[`  ${key}`] = objOne[key];
+    if (valueOne[key] === undefined) {
+      result[`+ ${key}`] = valueTwo[key];
     }
-    if (objTwo[key] && objOne[key] !== objTwo[key]) {
-      result[`- ${key}`] = objOne[key];
-      result[`+ ${key}`] = objTwo[key];
+
+    if (valueTwo[key] === undefined) {
+      result[`- ${key}`] = valueOne[key];
     }
-    if (!objTwo[key]) {
-      result[`- ${key}`] = objOne[key];
+
+    if (valueOne[key] 
+      && valueTwo[key] 
+      && typeof(valueOne[key]) === 'object' 
+      && typeof(valueTwo[key]) !== 'object') {
+
+        result[`- ${key}`] = _.cloneDeep(valueOne[key]);
+        result[`+ ${key}`] = valueTwo[key];
     }
-  }
-  /* eslint-disable-next-line */
-  for (const key of keysObj2) {
-    if (!objOne[key]) {
-      result[`+ ${key}`] = objTwo[key];
+    
+    if (valueOne[key] 
+      && valueTwo[key] 
+      && typeof(valueOne[key]) !== 'object' 
+      && typeof(valueTwo[key]) === 'object') {
+
+        result[`- ${key}`] = valueOne[key];
+        result[`+ ${key}`] = _.cloneDeep(valueTwo[key]);
+    }
+
+    if (valueOne[key] 
+      && valueTwo[key] 
+      && typeof(valueOne[key]) === 'object' 
+      && typeof(valueTwo[key]) === 'object') {
+
+        result[`  ${key}`] = bruteValues(valueOne[key], valueTwo[key]);
     }
   }
 
@@ -59,8 +80,9 @@ const bruteValues = (objOne, objTwo) => {
     return resultFin;
   };
   return sorted(unorderedKeys);
-};
+}
 
+  /* eslint-disable-next-line */
 const compare = (filePath1, filePath2) => {
   const fullPathOne = path.resolve(cwd(), filePath1);
   const fullPathSecond = path.resolve(cwd(), filePath2);
@@ -69,7 +91,7 @@ const compare = (filePath1, filePath2) => {
   const parseOne = parse(firstFile, path.extname(fullPathOne));
   const parseTwo = parse(secondFile, path.extname(fullPathSecond));
 
-  return bruteValues(parseOne, parseTwo);
+  console.log(bruteValues(parseOne, parseTwo));
 };
 
 export default compare;
