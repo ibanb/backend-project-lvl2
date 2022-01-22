@@ -3,72 +3,67 @@ import { cwd } from 'process';
 import path from 'path';
 import parse from './parsers.js';
 import _ from 'lodash';
+import stylish from './stylish.js';
 
 function bruteValues(valueOne, valueTwo) {
   const result = {};
 
   const keysOne = Object.keys(valueOne);
   const keysTwo = Object.keys(valueTwo);
-  const uniq = _.uniq(keysOne.concat(keysTwo));
+  const uniq = _.intersection(keysOne, keysTwo);
+
+  for (const key of keysOne) {
+    if (!keysTwo.includes(key)) {
+      result[`- ${key}`] = valueOne[key];
+    }
+  }
+
+  for (const key of keysTwo) {
+    if (!keysOne.includes(key)) {
+      result[`+ ${key}`] = valueTwo[key];
+    }
+  }
 
   for (const key of uniq) {
-
-    if (valueOne[key] && valueTwo[key] && valueOne[key] === valueTwo[key]) {
-      result[`  ${key}`] = valueOne[key]; 
+    if (valueOne[key] === valueTwo[key]) {
+      result[`  ${key}`] = valueOne[key];
     }
-    
-    if (valueOne[key] && valueTwo[key] 
-      && typeof(valueOne[key]) !== 'object' && typeof(valueTwo[key]) !== 'object' 
-      && valueOne[key] !== valueTwo[key]) {
 
+    if (!_.isObject(valueOne[key]) && !_.isObject(valueTwo[key]) && valueOne[key] === valueTwo[key]) {
+      result[`  ${key}`] = valueOne[key];
+    }
+
+    if (!_.isObject(valueOne[key]) && !_.isObject(valueTwo[key]) && valueOne[key] !== valueTwo[key]) {
       result[`- ${key}`] = valueOne[key];
-      result[`+ ${key}`] = valueTwo[key]; 
-    }
-
-    if (valueOne[key] === undefined) {
       result[`+ ${key}`] = valueTwo[key];
     }
 
-    if (valueTwo[key] === undefined) {
+    if (_.isObject(valueOne[key]) && !_.isObject(valueTwo[key])) {
       result[`- ${key}`] = valueOne[key];
+      result[`+ ${key}`] = valueTwo[key];
     }
 
-    if (valueOne[key] 
-      && valueTwo[key] 
-      && typeof(valueOne[key]) === 'object' 
-      && typeof(valueTwo[key]) !== 'object') {
-
-        result[`- ${key}`] = _.cloneDeep(valueOne[key]);
-        result[`+ ${key}`] = valueTwo[key];
-    }
-    
-    if (valueOne[key] 
-      && valueTwo[key] 
-      && typeof(valueOne[key]) !== 'object' 
-      && typeof(valueTwo[key]) === 'object') {
-
-        result[`- ${key}`] = valueOne[key];
-        result[`+ ${key}`] = _.cloneDeep(valueTwo[key]);
+    if (!_.isObject(valueOne[key]) && _.isObject(valueTwo[key])) {
+      result[`- ${key}`] = valueOne[key];
+      result[`+ ${key}`] = valueTwo[key];
     }
 
-    if (valueOne[key] 
-      && valueTwo[key] 
-      && typeof(valueOne[key]) === 'object' 
-      && typeof(valueTwo[key]) === 'object') {
-
-        result[`  ${key}`] = bruteValues(valueOne[key], valueTwo[key]);
+    if (_.isObject(valueOne[key]) && _.isObject(valueTwo[key])) {
+      result[`  ${key}`] = bruteValues(valueOne[key], valueTwo[key]);
     }
   }
+
+  
 
   const unorderedKeys = Object.keys(result);
   const sorted = (arr) => {
     const finalResult = arr.slice();
     const resultFin = {};
     finalResult.sort((a, b) => {
-      if (a[2] > b[2]) {
+      if (a.slice(2) > b.slice(2)) {
         return 1;
       }
-      if (a[2] < b[2]) {
+      if (a.slice(2) < b.slice(2)) {
         return -1;
       }
       return 0;

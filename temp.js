@@ -1,40 +1,47 @@
-for (const key of keysObj1) {
-  if (objTwo[key] && objOne[key] === objTwo[key]) {
-    result[`  ${key}`] = objOne[key];
-  }
-  if (objTwo[key] && objOne[key] !== objTwo[key]) {
-    result[`- ${key}`] = objOne[key];
-    result[`+ ${key}`] = objTwo[key];
-  }
-  if (!objTwo[key]) {
-    result[`- ${key}`] = objOne[key];
-  }
-}
-/* eslint-disable-next-line */
-for (const key of keysObj2) {
-  if (!objOne[key]) {
-    result[`+ ${key}`] = objTwo[key];
-  }
-}
+import _ from 'lodash';
 
-const unorderedKeys = Object.keys(result);
-  const sorted = (arr) => {
-    const finalResult = arr.slice();
-    const resultFin = {};
-    finalResult.sort((a, b) => {
-      if (a[2] > b[2]) {
-        return 1;
-      }
-      if (a[2] < b[2]) {
-        return -1;
-      }
-      return 0;
-    });
-    /* eslint-disable-next-line */
-    for (const key of finalResult) {
-      resultFin[key] = result[key];
+const testing = {
+  a: {
+    ab: 100
+  },
+  b: 2,
+  c: {
+    d: 4,
+    e: {
+      f: 5
     }
-    return resultFin;
-  };
-  return sorted(unorderedKeys);
+  }
 };
+
+const stylish = (result) => {
+
+const final = [];
+const intend = ' ';
+const mult = 2;
+
+  const iter = (result, mult) => {
+    
+    const keys = Object.keys(result);
+    const spaces = intend.repeat(mult);
+    // const lastSpaces = 
+
+
+    for (const key of keys) {
+      if (_.isObject(result[key])) {
+        final.push(`${spaces}${key}: {\n`);
+        iter(result[key], mult + 2);
+      }
+      if (!_.isObject(result[key])) {
+        final.push(`${spaces}${key}: ${result[key]}\n`);
+      }
+    }
+    final.push(`${intend.repeat(mult - 2)}}\n`);
+  };
+
+iter(result, mult);
+
+return `{\n${final.join('')}`;
+};
+
+console.log(stylish(testing));
+
