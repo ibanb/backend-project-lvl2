@@ -3,7 +3,6 @@ import { cwd } from 'process';
 import path from 'path';
 import parse from './parsers.js';
 import _ from 'lodash';
-import stylish from './stylish.js';
 
 function bruteValues(valueOne, valueTwo) {
   const result = {};
@@ -53,8 +52,6 @@ function bruteValues(valueOne, valueTwo) {
     }
   }
 
-  
-
   const unorderedKeys = Object.keys(result);
   const sorted = (arr) => {
     const finalResult = arr.slice();
@@ -74,6 +71,7 @@ function bruteValues(valueOne, valueTwo) {
     }
     return resultFin;
   };
+
   return sorted(unorderedKeys);
 }
 
@@ -85,8 +83,8 @@ const compare = (filePath1, filePath2) => {
   const secondFile = fs.readFileSync(fullPathSecond, 'utf8');
   const parseOne = parse(firstFile, path.extname(fullPathOne));
   const parseTwo = parse(secondFile, path.extname(fullPathSecond));
-
-  console.log(bruteValues(parseOne, parseTwo));
+  
+  return bruteValues(parseOne, parseTwo);
 };
 
 export default compare;
