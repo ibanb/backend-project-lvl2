@@ -1,16 +1,20 @@
 import compare from '../bin/logics.js';
-import result from '../__fixtures__/result.js';
+import _ from 'lodash';
+
+const testing = {
+  "deep": 
+  { 
+    "id": 
+    { 
+      "number": 45
+    }
+  },"fee":100500
+};
 
 test('compare json', () => {
-  const testObj = result;
   const objOnePath = '__fixtures__/file1.json';
   const objTwoPath = '__fixtures__/file2.json';
-  expect(compare(objOnePath, objTwoPath)).toEqual(testObj);
+  const entries = Object.entries(compare(objOnePath, objTwoPath));
+  expect(_.last(entries)[1]).toStrictEqual(testing);
 });
 
-test('compare yaml', () => {
-  const testObj = result;
-  const objOnePath = '__fixtures__/file1.yml';
-  const objTwoPath = '__fixtures__/file2.yml';
-  expect(compare(objOnePath, objTwoPath)).toEqual(testObj);
-});
