@@ -1,14 +1,13 @@
-import compare from '../bin/logics.js';
 import _ from 'lodash';
+import compare from '../bin/logics.js';
 
 const testing = {
-  "deep": 
-  { 
-    "id": 
-    { 
-      "number": 45
-    }
-  },"fee":100500
+  deep: {
+    id: {
+      number: 45,
+    },
+  },
+  fee: 100500,
 };
 
 test('compare json', () => {
@@ -17,4 +16,3 @@ test('compare json', () => {
   const entries = Object.entries(compare(objOnePath, objTwoPath));
   expect(_.last(entries)[1]).toStrictEqual(testing);
 });
-
