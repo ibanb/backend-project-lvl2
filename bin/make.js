@@ -1,8 +1,9 @@
 const make = (obj) => {
     const struct = [];
+
     const entries = Object.entries(obj);
     for(const [key, value] of entries) {
-        if (typeof value !== 'object') {
+        if (typeof value !== 'object' || value === null) {
             struct.push({propName: key, type: 'prime', value});
         } else {
             struct.push({propName: key, type: 'complex', value: [...make(value)]});
@@ -19,10 +20,6 @@ const getType = (prop) => {
     return prop.type;
 };
 
-const getChildren = (prop) => {
-    return prop.children;
-};
-
 const getValue = (prop) => {
     return prop.value;
 };
@@ -37,4 +34,4 @@ const getChild = (data, name) => {
 };
 
 
-export { make, getName, getChildren, getValue, getType, hasProp, getChild };
+export { make, getName, getValue, getType, hasProp, getChild };

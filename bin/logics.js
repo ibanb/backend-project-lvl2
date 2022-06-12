@@ -17,7 +17,7 @@ const genDiff = (filePath1, filePath2, formatName) => {
   const parseTwo = parse(secondFile, path.extname(fullPathSecond));
   const format = index(formatName);
   const diff = bruteValues(parseOne, parseTwo);
-  return format(diff);
+  return diff;  // add full - format(diff);
 };
 
 export default genDiff;

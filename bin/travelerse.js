@@ -1,4 +1,4 @@
-import { make, getName, getChildren, getValue, getType, hasProp, getChild } from './make.js';
+import { make, getName, getValue, getType, hasProp, getChild } from './make.js';
 
 function travelerse(first, second) {
     const struct = [];
@@ -34,11 +34,23 @@ function travelerse(first, second) {
     // если имя есть только во втором объекте
     for (const item of second) {
         if (!hasProp(first, getName(item))) {
-            struct.push({propName: `- ${getName(item)}`, type: getType(item), value: getValue(item)});
+            struct.push({propName: `+ ${getName(item)}`, type: getType(item), value: getValue(item)});
         }
     }
 
-    return struct;
+    // SORT func........
+
+    return struct.sort((a, b) => {
+        if (a.propName[2] > b.propName[2]) {
+            return 1;
+        }
+        if (a.propName[2] < b.propName[2]) {
+            return -1;
+        }
+        if (a.propName[2] == b.propName[2]) {
+            return 0;
+        }
+    });
 }
 
 export default travelerse;
