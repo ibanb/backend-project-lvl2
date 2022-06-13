@@ -1,47 +1,73 @@
 import _ from 'lodash';
+import { make, getName, getValue, getType, hasProp, getChild } from '../bin/make.js';
+import setMarker from '../bin/setMarker.js';
+// import travelersePlain from '../bin/travelersePlain.js';
 
-function plain(obj) {
-  const stack = [];
-  const paths = [];
-  /* eslint-disable-next-line */
-  function travelerse(obj) {
-    const keys = Object.keys(obj);
 
-    for (let i = 0; i < keys.length; i += 1) {
-      const sign = keys[i][0];
-      if (sign === ' ') {
-        stack.push(keys[i].slice(2));
-        travelerse(obj[keys[i]]);
-      }
+function plain(diff) {
+  const stackPaths = [];
+  const result = [];
+  const markedDiff = diff.map(setMarker);
+  const setSign = {
+    '+': '-',
+    '-': '+'
+  };
 
-      if (sign === '+' && _.has(obj, `-${keys[i].slice(1)}`)) {
-        stack.push(keys[i].slice(2));
-        paths.push(`Property '${stack.join('.')}' was updated. From '${obj[`-${keys[i].slice(1)}`]}' to '${obj[`+${keys[i].slice(1)}`]}'`);
-        stack.pop();
-      }
-      if (sign === '-' && _.has(obj, `+${keys[i].slice(1)}`)) {
-        /* eslint-disable-next-line */
-        continue;
-      }
-      if (sign === '-' && !_.has(obj, `+${keys[i].slice(1)}`)) {
-        stack.push(keys[i].slice(2));
-        paths.push(`Property '${stack.join('.')}' was removed`);
-        stack.pop();
-      }
-      if (sign === '+' && !_.has(obj, `-${keys[i].slice(1)}`)) {
-        stack.push(keys[i].slice(2));
-        let value = obj[`+${keys[i].slice(1)}`];
-        if (_.isObject(obj[`+${keys[i].slice(1)}`])) {
-          value = '[complex value]';
+  const travelersePlain = (diff) => {
+
+
+    for (const item of diff) {
+        if (item.marker === '+') {
+            continue;
+        } else {
+            const name = getName(item);
+            const type = getType(item);
+            const value = getValue(item);
+            const sign = name[0];
+            const pairName = `${setSign[sign]}${name.slice(1)}`;
+            const checkPair = hasProp(diff, pairName);
+            const pair = checkPair ? getChild(diff, pairName) : false;
+            const pairType = pair ? getType(pair) : null;
+            if (pairType !== null) {
+              pair.marker = "+";
+            }
+            stackPaths.push(name.slice(2));
+
+            if (type === "prime") {
+                if (checkPair) {
+                    result.push(`Property '${stackPaths.join('.')}' was updated. From '${value}' to '${pairType === 'complex' ? `[complex value]` : getValue(pair)}'`);
+                } else {
+                  if (sign === '+') {
+                    result.push(`Property '${stackPaths.join('.')}' was added with value: ${type === 'complex' ? `[complex value]` : value}`);
+                  }
+                  if (sign === '-') {
+                    result.push(`Property '${stackPaths.join('.')}' was removed`);
+                  }
+                }
+                stackPaths.pop();
+            }
+    
+            if (type === 'complex') {
+                if (checkPair) {
+                  result.push(`Property '${stackPaths.join('.')}' was updated. From ${type === 'complex' ? `[complex value]` : value} to '${pairType === 'complex' ? `[complex value]` : getValue(pair)}'`);
+                } else {
+                  if (sign === '+') {
+                    result.push(`Property '${stackPaths.join('.')}' was added with value: [complex value]`);
+                  }
+                  if (sign === '-') {
+                    result.push(`Property '${stackPaths.join('.')}' was removed`);
+                  }
+                } 
+                if (!checkPair) {
+                  travelersePlain(value);
+                }
+                stackPaths.pop();
+            }
         }
-        paths.push(`Property '${stack.join('.')}' was added with value: ${value}`);
-        stack.pop();
-      }
     }
-    stack.pop();
-  }
-  travelerse(obj);
-  return paths.join('\n');
+};
+  travelersePlain(markedDiff);
+  return result.join('\n');
 }
 
 export default plain;

@@ -8,7 +8,7 @@ import bruteValues from './bruteValues.js';
 
 
 /* eslint-disable-next-line */
-const genDiff = (filePath1, filePath2, formatName) => {
+const genDiff = (filePath1, filePath2, formatName = 'stylish') => {
   const fullPathOne = path.resolve(cwd(), filePath1);
   const fullPathSecond = path.resolve(cwd(), filePath2);
   const firstFile = fs.readFileSync(fullPathOne, 'utf8');
