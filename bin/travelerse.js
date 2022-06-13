@@ -41,13 +41,13 @@ function travelerse(first, second) {
     // SORT func........
 
     return struct.sort((a, b) => {
-        if (a.propName[2] > b.propName[2]) {
+        if (a.propName.slice(2) > b.propName.slice(2)) {
             return 1;
         }
-        if (a.propName[2] < b.propName[2]) {
+        if (a.propName.slice(2) < b.propName.slice(2)) {
             return -1;
         }
-        if (a.propName[2] == b.propName[2]) {
+        if (a.propName.slice(2) == b.propName.slice(2)) {
             return 0;
         }
     });
