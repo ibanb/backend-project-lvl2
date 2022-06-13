@@ -1,4 +1,5 @@
 import { make, getName, getValue, getType, hasProp, getChild } from './make.js';
+import deep from './deep.js';
 
 function travelerse(first, second) {
     const struct = [];
@@ -25,16 +26,39 @@ function travelerse(first, second) {
             if (typeOne === typeTwo && typeOne === 'complex') {
                 struct.push({propName: `  ${getName(item)}`, type: 'complex', value: [...travelerse(valueOne, valueTwo)]});
             }
+
+            // нужна функция обхода в глубину которая изменить свуойства и добавить в их названия пробелы
+
+            if (typeOne !== typeTwo) {
+                if (typeOne === 'complex') {
+                    struct.push({propName: `- ${getName(item)}`, type: typeOne, value: deep(valueOne)});
+                    struct.push({propName: `+ ${getName(item)}`, type: typeTwo, value: valueTwo});
+                } else {
+                    struct.push({propName: `- ${getName(item)}`, type: typeOne, value: valueOne});
+                    struct.push({propName: `+ ${getName(item)}`, type: typeTwo, value: deep(valueTwo)});
+                }
+            }
         }
 
         if (!hasProp(second, getName(item))) {
-            struct.push({propName: `- ${getName(item)}`, type: getType(item), value: getValue(item)});
+            // тоже самое если тип комплексный то пробежать в глубину
+            if (getType(item) === 'complex') {
+                struct.push({propName: `- ${getName(item)}`, type: getType(item), value: deep(getValue(item))});
+            } else {
+                struct.push({propName: `- ${getName(item)}`, type: getType(item), value: getValue(item)});
+            }
+            
         }
     }
     // если имя есть только во втором объекте
     for (const item of second) {
         if (!hasProp(first, getName(item))) {
-            struct.push({propName: `+ ${getName(item)}`, type: getType(item), value: getValue(item)});
+            // тоже самое если тип комплексный пробежать в глубину и поменять названия свойст
+            if (getType(item) === 'complex') {
+                struct.push({propName: `+ ${getName(item)}`, type: getType(item), value: deep(getValue(item))});
+            } else {
+                struct.push({propName: `+ ${getName(item)}`, type: getType(item), value: getValue(item)});
+            }
         }
     }
 
