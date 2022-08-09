@@ -35,10 +35,10 @@ function plain(diff) {
 
             if (type === "prime") {
                 if (checkPair) {
-                    result.push(`Property '${stackPaths.join('.')}' was updated. From '${value}' to '${pairType === 'complex' ? `[complex value]` : getValue(pair)}'`);
+                    result.push(`Property ${stackPaths.join('.')} was updated. From ${value} to ${pairType === 'complex' ? `[complex value]` : getValue(pair)}`);
                 } else {
                   if (sign === '+') {
-                    result.push(`Property '${stackPaths.join('.')}' was added with value: ${type === 'complex' ? `[complex value]` : value}`);
+                    result.push(`Property ${stackPaths.join('.')} was added with value: ${type === 'complex' ? `[complex value]` : value}`);
                   }
                   if (sign === '-') {
                     result.push(`Property '${stackPaths.join('.')}' was removed`);
@@ -49,7 +49,7 @@ function plain(diff) {
     
             if (type === 'complex') {
                 if (checkPair) {
-                  result.push(`Property '${stackPaths.join('.')}' was updated. From ${type === 'complex' ? `[complex value]` : value} to '${pairType === 'complex' ? `[complex value]` : getValue(pair)}'`);
+                  result.push(`Property ${stackPaths.join('.')} was updated. From ${type === 'complex' ? `[complex value]` : value} to ${pairType === 'complex' ? `[complex value]` : getValue(pair)}`);
                 } else {
                   if (sign === '+') {
                     result.push(`Property '${stackPaths.join('.')}' was added with value: [complex value]`);
