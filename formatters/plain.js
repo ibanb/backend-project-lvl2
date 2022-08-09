@@ -38,7 +38,7 @@ function plain(diff) {
                     result.push(`Property '${stackPaths.join('.')}' was updated. From ${value} to '${pairType === 'complex' ? `[complex value]` : getValue(pair)}'`);
                 } else {
                   if (sign === '+') {
-                    result.push(`Property '${stackPaths.join('.')}' was added with value: ${type === 'complex' ? `[complex value]` : value}`);
+                    result.push(`Property '${stackPaths.join('.')}' was added with value: ${type === 'complex' ? `[complex value]` : `'${value}'`}`);
                   }
                   if (sign === '-') {
                     result.push(`Property '${stackPaths.join('.')}' was removed`);
