@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "description": "[![Actions Status](https://github.com/ibanb/backend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/ibanb/backend-project-lvl2/actions)",
   "version": "1.0.1",
-  "main": "logics.js",
+  "main": "bin/logics.js",
   "type": "module",
   "bin": {
     "code": "bin/gendiff.js"
