@@ -1,11 +1,9 @@
 import fs from 'fs';
 import { cwd } from 'process';
 import path from 'path';
-import _ from 'lodash';
 import parse from './parsers.js';
 import index from '../formatters/index.js';
 import bruteValues from './bruteValues.js';
-
 
 /* eslint-disable-next-line */
 const genDiff = (filePath1, filePath2, formatName = 'stylish') => {

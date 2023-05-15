@@ -1,11 +1,13 @@
-import _ from 'lodash';
-import { make, getName, getValue, getType, hasProp, getChild } from '../bin/make.js';
-
+import {
+  getName, getValue, getType,
+} from '../bin/make.js';
+/* eslint-disable-next-line */
 const stylish = (diff, intend = ' ', mult = 2) => {
-  
+  /* eslint-disable-next-line */
   const iter = (data, mult) => {
     let result = '';
-    data.map(item => {
+    /* eslint-disable-next-line */
+    data.map((item) => {
       if (getType(item) === 'prime') {
         result += `${intend.repeat(mult)}${getName(item)}: ${getValue(item)}\n`;
       } else {
