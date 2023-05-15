@@ -49,10 +49,10 @@ function plain(diff) {
     
             if (type === 'complex') {
                 if (checkPair) {
-                  result.push(`Property '${stackPaths.join('.')}' was updated. From '${type === 'complex' ? '[complex value]' : value}' to '${pairType === 'complex' ? '[complex value]' : getValue(pair)}'`);
+                  result.push(`Property '${stackPaths.join('.')}' was updated. From ${type === 'complex' ? '[complex value]' : value} to '${pairType === 'complex' ? '[complex value]' : getValue(pair)}'`);
                 } else {
                   if (sign === '+') {
-                    result.push(`Property '${stackPaths.join('.')}' was added with value: '[complex value]'`);
+                    result.push(`Property '${stackPaths.join('.')}' was added with value: [complex value]`);
                   }
                   if (sign === '-') {
                     result.push(`Property '${stackPaths.join('.')}' was removed`);
