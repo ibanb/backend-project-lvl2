@@ -3,6 +3,8 @@ import { make, getName, getValue, getType, hasProp, getChild } from '../bin/make
 import setMarker from '../bin/setMarker.js';
 // import travelersePlain from '../bin/travelersePlain.js';
 
+const normalized = value => [true, false, null, 0].includes(value) ? value : `'${value}'`;
+
 
 function plain(diff) {
   const stackPaths = [];
@@ -35,10 +37,10 @@ function plain(diff) {
 
             if (type === "prime") {
                 if (checkPair) {
-                    result.push(`Property '${stackPaths.join('.')}' was updated. From '${value}' to '${pairType === 'complex' ? '[complex value]' : getValue(pair)}'`);
+                    result.push(`Property '${stackPaths.join('.')}' was updated. From ${normalized(value)} to ${pairType === 'complex' ? '[complex value]' : normalized(getValue(pair))}`);
                 } else {
                   if (sign === '+') {
-                    result.push(`Property '${stackPaths.join('.')}' was added with value: ${type === 'complex' ? '[complex value]' : `'${value}'`}`);
+                    result.push(`Property '${stackPaths.join('.')}' was added with value: ${type === 'complex' ? '[complex value]' : normalized(value)}`);
                   }
                   if (sign === '-') {
                     result.push(`Property '${stackPaths.join('.')}' was removed`);
@@ -49,7 +51,7 @@ function plain(diff) {
     
             if (type === 'complex') {
                 if (checkPair) {
-                  result.push(`Property '${stackPaths.join('.')}' was updated. From ${type === 'complex' ? '[complex value]' : value} to ${pairType === 'complex' ? '[complex value]' : `'${getValue(pair)}'`}`);
+                  result.push(`Property '${stackPaths.join('.')}' was updated. From ${type === 'complex' ? '[complex value]' : normalized(value)} to ${pairType === 'complex' ? '[complex value]' : normalized(getValue(pair))}`);
                 } else {
                   if (sign === '+') {
                     result.push(`Property '${stackPaths.join('.')}' was added with value: [complex value]`);
