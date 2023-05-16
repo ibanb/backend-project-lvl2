@@ -1,20 +1,24 @@
 import _ from 'lodash';
 
-export default function(object) {
-    
-    const result = {};
+export default function sorted(object) {
 
-    _.forEach(Object.keys(object).sort((a, b) => {
-        if (b[2] > a[2]) {
-            return -1;
-        }
-        if (b[2] < a[2]) {
+    const ordered = Object.keys(object).sort((a, b) => {
+        if (a.slice(2) > b.slice(2)) {
             return 1;
         }
-        return 0;
-    }), function(key) {
-        result[key] = object[key];
-    });
-    return result;
-      
-}
+        if (a.slice(2) < b.slice(2)) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }).reduce(
+        (obj, key) => { 
+          obj[key] = object[key]; 
+          return obj;
+        }, 
+        {}
+      );
+
+    return ordered
+
+};

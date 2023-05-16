@@ -1,18 +1,7 @@
 import _ from 'lodash';
 import sorted from './sort.js';
 
-// THIS MAIN func that create diff recursive in obj
-// attention SEE in STD task)))
-
-  // Короче всё ясно. 
-  // 1) найти ключи которые есть в первом но их нет во втором и добавить их с правильными знаками
-  // 2) найти ключи которые есть во втором но их нет в первом и добавить их с правильными знаками
-  // 3) Найти ключи которые есть в обоих и они простые
-  // 4) Найти ключи которые есть в обоих и они комплексные
-  // 5) Провести сортировку ключей на выходе (использовать LODASH)
-
 export default function findDiff(dataOne, dataTwo) {
-
   const result = {};
   
   const propsDataOne = Object.entries(dataOne);
@@ -51,7 +40,6 @@ export default function findDiff(dataOne, dataTwo) {
     const typeDataOneValue = typeof dataOneValue === 'object' && dataOneValue !== null ? 'complex' : 'prime';
     const typeDataTwoValue = typeof dataTwoValue === 'object' && dataTwoValue !== null ? 'complex' : 'prime';
     
-
     // types defferent
     if (typeDataOneValue !== typeDataTwoValue) {
       result[`- ${key}`] = dataOneValue;
@@ -74,7 +62,6 @@ export default function findDiff(dataOne, dataTwo) {
     if (typeDataOneValue === typeDataTwoValue && typeDataOneValue === 'complex') {
       result[`  ${key}`] = findDiff(dataOneValue, dataTwoValue);
     }
-    
   })
   
   return sorted(result);
