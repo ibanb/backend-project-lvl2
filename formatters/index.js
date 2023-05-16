@@ -2,6 +2,8 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
+
+// create switch-case with default case
 const index = (formatName) => {
   if (formatName === 'stylish') {
     return stylish;

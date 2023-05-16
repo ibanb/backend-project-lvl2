@@ -1,5 +1,6 @@
-function toJson(obj) {
-  return JSON.stringify(obj);
+
+export default function toJson(obj) {
+  return 'json output';
 }
 
-export default toJson;
+
