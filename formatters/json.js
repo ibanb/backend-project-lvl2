@@ -1,6 +1,6 @@
 
-export default function toJson(obj) {
-  return 'json output';
+export default function toJson(diff) {
+  return JSON.stringify(diff);
 }
 
 
