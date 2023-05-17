@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import sorted from './sort.js';
+import sort from './sort.js';
+import normalize from './normalize.js';
 
 export default function findDiff(dataOne, dataTwo) {
   const result = {};
@@ -40,7 +41,7 @@ export default function findDiff(dataOne, dataTwo) {
     const typeDataOneValue = typeof dataOneValue === 'object' && dataOneValue !== null ? 'complex' : 'prime';
     const typeDataTwoValue = typeof dataTwoValue === 'object' && dataTwoValue !== null ? 'complex' : 'prime';
     
-    // types defferent
+    // types different
     if (typeDataOneValue !== typeDataTwoValue) {
       result[`- ${key}`] = dataOneValue;
       result[`+ ${key}`] = dataTwoValue;
@@ -58,11 +59,14 @@ export default function findDiff(dataOne, dataTwo) {
       }
     }
 
-    // type complex
+    // types complex
     if (typeDataOneValue === typeDataTwoValue && typeDataOneValue === 'complex') {
       result[`  ${key}`] = findDiff(dataOneValue, dataTwoValue);
     }
   })
   
-  return sorted(result);
+  const sorted = sort(result);
+  const normalized = normalize(sorted);
+
+  return normalized;
 };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default function sorted(object) {
+export default function sort(object) {
 
     const ordered = Object.keys(object).sort((a, b) => {
         if (a.slice(2) > b.slice(2)) {
