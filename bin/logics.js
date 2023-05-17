@@ -15,4 +15,4 @@ export default function gendiff(filePath1, filePath2, formatName = 'stylish') {
   const formater = index(formatName);
   const diff = findDiff(parseOneData, parseTwoData);
   return formater(diff);
-};
+}

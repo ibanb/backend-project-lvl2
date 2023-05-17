@@ -1,10 +1,8 @@
-
+/* eslint-disable */
 export default function stylish(diff, intend = ' ', mult = 4) {
-
   const iter = (diff, deep) => {
-    
     const entries = Object.entries(diff);
-    
+
     return entries.reduce((acc, [key, value]) => {
       const typeOfValue = typeof value === 'object' && value !== null ? 'complex' : 'prime';
       const newIntend = intend.repeat((mult * deep) - 2);
@@ -26,4 +24,4 @@ export default function stylish(diff, intend = ' ', mult = 4) {
   const formedOutput = `{\n${stylushDiff.join('\n')}\n}`;
 
   return formedOutput;
-};
+}

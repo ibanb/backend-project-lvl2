@@ -1,21 +1,19 @@
-import uniteProps from "../bin/uniteProps.js";
+/* eslint-disable */
+import uniteProps from '../bin/uniteProps.js';
 
 const normalize = (value) => {
   const literals = [true, false, null, 0];
   const typeOfValue = typeof value === 'object' && value !== null ? 'complex' : 'prime';
-  return typeOfValue === 'complex' ? `[complex value]` : `${literals.includes(value) ? value : `'${value}'`}`;
-}
+  return typeOfValue === 'complex' ? '[complex value]' : `${literals.includes(value) ? value : `'${value}'`}`;
+};
 
 export default function plain(diff) {
-
   const diffWithUniteProps = uniteProps(diff);
 
   const iter = (obj, path) => {
-
     const entries = Object.entries(obj);
 
     return entries.reduce((acc, [key, value]) => {
-
       const currentPath = `${path}${path === '' ? '' : '.'}${key.slice(2)}`;
       const typeOfValue = typeof value === 'object' && value !== null ? 'complex' : 'prime';
 
@@ -34,10 +32,8 @@ export default function plain(diff) {
       if (key.slice(0, 1) === ' ' && typeOfValue === 'complex') {
         return [...acc, ...iter(value, currentPath)];
       }
-
     }, []);
-  }
+  };
 
-  
   return iter(diffWithUniteProps, '').join('\n');
-};
+}
