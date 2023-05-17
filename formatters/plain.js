@@ -1,7 +1,7 @@
 import uniteProps from "../bin/uniteProps.js";
 
 const normalize = (value) => {
-  const literals = [true, false, null];
+  const literals = [true, false, null, 0];
   const typeOfValue = typeof value === 'object' && value !== null ? 'complex' : 'prime';
   return typeOfValue === 'complex' ? `[complex value]` : `${literals.includes(value) ? value : `'${value}'`}`;
 }
