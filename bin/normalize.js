@@ -1,4 +1,4 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 
 export default function normalize(diff) {
   const signs = ['-', '+', ' '];
@@ -12,10 +12,10 @@ export default function normalize(diff) {
       const typeOfValue = typeof value === 'object' && value !== null ? 'complex' : 'prime';
       // prime
       if (typeOfValue === 'prime' && signs.includes(key.slice(0, 1))) {
-        const newAcc = _.cloneDeep(acc);
+        // const newAcc = _.cloneDeep(acc);
         acc[key] = value;
         // return acc;
-        return {...acc,}
+        // return { ...acc };
       }
       if (typeOfValue === 'prime' && !signs.includes(key.slice(0, 1))) {
         acc[`  ${key}`] = value;

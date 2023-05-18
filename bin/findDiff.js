@@ -38,25 +38,25 @@ export default function findDiff(objOne, objTwo) {
         // types different
         if (typeDataOneValue !== typeDataTwoValue) {
           const newAcc = {
-            [`- ${key}`] : dataOneValue,
-            [`+ ${key}`] : dataTwoValue,
-          }
+            [`- ${key}`]: dataOneValue,
+            [`+ ${key}`]: dataTwoValue,
+          };
           return sort({ ...acc, ...newAcc, ...uniteUnique });
         }
         // types prime
         if (typeDataOneValue === typeDataTwoValue && typeDataOneValue === 'prime') {
           if (dataOneValue === dataTwoValue) {
             const newAcc = {
-              [`  ${key}`] : dataOneValue,
-            }
+              [`  ${key}`]: dataOneValue,
+            };
             return sort({ ...acc, ...newAcc, ...uniteUnique });
           }
 
           if (dataOneValue !== dataTwoValue) {
             const newAcc = {
-              [`- ${key}`] : dataOneValue,
-              [`+ ${key}`] : dataTwoValue,
-            }
+              [`- ${key}`]: dataOneValue,
+              [`+ ${key}`]: dataTwoValue,
+            };
             return sort({ ...acc, ...newAcc, ...uniteUnique });
           }
         }
@@ -64,11 +64,12 @@ export default function findDiff(objOne, objTwo) {
         // types complex
         if (typeDataOneValue === typeDataTwoValue && typeDataOneValue === 'complex') {
           const newAcc = {
-            [`  ${key}`] : iter(dataOneValue, dataTwoValue),
-          }
+            [`  ${key}`]: iter(dataOneValue, dataTwoValue),
+          };
           return sort({ ...acc, ...newAcc, ...uniteUnique });
         }
 
+        return null;
       },
       {},
     );
