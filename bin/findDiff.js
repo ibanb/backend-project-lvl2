@@ -60,7 +60,8 @@ export default function findDiff(objOne, objTwo) {
           acc[`  ${key}`] = iter(dataOneValue, dataTwoValue);
         }
 
-        return { ...acc, ...uniteUnique };
+        const sortedAcc = sort(acc);
+        return { ...sortedAcc, ...uniteUnique };
       },
       {},
     );
@@ -69,7 +70,7 @@ export default function findDiff(objOne, objTwo) {
   };
 
   const result = iter(objOne, objTwo);
-  const sorted = sort(result);
+  const sorted = sort(_.cloneDeep(result));
   const normalized = normalize(sorted);
 
   return normalized;
