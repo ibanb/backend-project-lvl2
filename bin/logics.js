@@ -27,6 +27,19 @@ export default function gendiff(filePath1, filePath2, formatName = 'stylish') {
   console.log('==========================================');
   console.log('==========================================');
   console.log('==========================================');
+  console.log('==========================================');
+  console.log('FIRST FILE');
+  console.log('==========================================');
+  console.log(parseOneData);
+  console.log('==========================================');
+  console.log('==========================================');
+  console.log('==========================================');
+  console.log('SECOND FILE');
+  console.log('==========================================');
+  console.log(parseTwoData);
+  console.log('==========================================');
+  console.log('==========================================');
+  console.log('==========================================');
 
   const diff = findDiff(parseOneData, parseTwoData);
   return formater(diff);
