@@ -1,11 +1,11 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 import sort from './sort.js';
 import normalize from './normalize.js';
 
 export default function findDiff(objOne, objTwo) {
   const iter = (dataOne, dataTwo) => {
-    const propsDataOne = Object.entries(dataOne);
-    const propsDataTwo = Object.entries(dataTwo);
+    const propsDataOne = Object.entries(_.cloneDeep(dataOne));
+    const propsDataTwo = Object.entries(_.cloneDeep(dataTwo));
 
     const uniquePropsDataOne = propsDataOne.filter((prop) => {
       const [key] = prop;
