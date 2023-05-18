@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export default function normalize(diff) {
   const signs = ['-', '+', ' '];
 
@@ -12,31 +10,30 @@ export default function normalize(diff) {
       const typeOfValue = typeof value === 'object' && value !== null ? 'complex' : 'prime';
       // prime
       if (typeOfValue === 'prime' && signs.includes(key.slice(0, 1))) {
-
         const newAcc = {
           [`${key}`]: value,
         };
-        return { ...acc, ...newAcc};
+        return { ...acc, ...newAcc };
       }
       if (typeOfValue === 'prime' && !signs.includes(key.slice(0, 1))) {
         const newAcc = {
-          [`  ${key}`] : value,
-        }
-        return { ...acc, ...newAcc};
+          [`  ${key}`]: value,
+        };
+        return { ...acc, ...newAcc };
       }
       // complex
       if (typeOfValue === 'complex' && signs.includes(key.slice(0, 1))) {
         const newAcc = {
           [`${key}`]: iter(value),
-        }
-        return { ...acc, ...newAcc};
+        };
+        return { ...acc, ...newAcc };
       }
 
       if (typeOfValue === 'complex' && !signs.includes(key.slice(0, 1))) {
         const newAcc = {
           [`  ${key}`]: iter(value),
-        }
-        return { ...acc, ...newAcc};
+        };
+        return { ...acc, ...newAcc };
       }
       return null;
     }, {});
